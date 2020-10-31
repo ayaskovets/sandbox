@@ -1,8 +1,8 @@
 module Problems.Problems11_20 where
 
--- Modified run-length encoding
 import Problems.Problems1_10 (problem10)
 
+-- Modified run-length encoding
 data RLItem a = Single a | Multiple Int a
     deriving (Show)
 
