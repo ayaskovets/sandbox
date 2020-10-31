@@ -35,7 +35,25 @@ problem25 :: [a] -> IO [a]
 problem25 x = problem23 x (length x)
 
 -- Generate the combinations of K distinct objects chosen from the N elements of a list
+problem26 :: Int -> [a] -> [[a]]
+problem26 0 _      = [[]]
+problem26 _ []     = []
+problem26 k (x:xs) = ((x:) <$> problem26 (k-1) xs) ++ problem26 k xs -- Derived from: K (X:XS) = X:(K-1 XS) ++ (K XS)
 
 -- Group the elements of a set into disjoint subsets
+problem27 :: [Int] -> [a] -> [[[a]]]
+problem27 [] _     = [[]]
+problem27 (n:ns) x = [ g:gs | (g, rs) <- aux n x, gs <- problem27 ns rs ]
+    where aux 0 xs     = [([], xs)]
+          aux _ []     = []
+          aux n (x:xs) = [ (x:r, rs) | (r, rs) <- aux (n-1) xs ] ++ [ (r, x:rs) | (r, rs) <- aux n xs ]
 
 -- Sorting a list of lists according to length of sublists
+problem28 :: Ord a => [[a]] -> [[a]]
+problem28 [x]    = [x]
+problem28 [x, y] = if length x >= length y then [x, y] else [y, x]
+problem28 x      = let l2 = length x `div` 2 in aux (problem28 $ take l2 x) (problem28 $ drop l2 x)
+    where aux [] []         = []
+          aux (a:as) []     = a:(aux as [])
+          aux [] (b:bs)     = b:(aux [] bs)
+          aux (a:as) (b:bs) = if length a >= length b then a:(aux as (b:bs)) else b:(aux (a:as) bs)
