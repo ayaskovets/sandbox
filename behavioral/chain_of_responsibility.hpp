@@ -45,7 +45,6 @@ class ConcreteHandlerA : public AbstractHandler {
  public:
   AbstractRequest* handle(AbstractRequest* request) override {
     if (dynamic_cast<ConcreteRequestA*>(request)) {
-      printf("handling A");
       // handle ConcreteRequestA
     }
 
@@ -57,7 +56,6 @@ class ConcreteHandlerB : public AbstractHandler {
  public:
   AbstractRequest* handle(AbstractRequest* request) override {
     if (dynamic_cast<ConcreteRequestB*>(request)) {
-      printf("handling B");
       // handle ConcreteRequestB
     }
 
