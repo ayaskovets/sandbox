@@ -21,7 +21,7 @@ namespace sandbox {
         int height;
 
       public:
-        template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+        template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
         explicit AVLNode(U&& Key = U()) : key(std::forward<U>(Key)), right(nullptr), left(nullptr), height(0) {}
       };
 
@@ -30,23 +30,23 @@ namespace sandbox {
     public:
       AVLTree() : root(nullptr) {}
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       explicit AVLTree(U&& key) {
         root = new AVLNode(std::forward<U>(key));
         root->height = 1;
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void insert(U&& key) {
         insertNode(root, std::forward<T>(key));        
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       const AVLNode* find(U&& key) const {
         return findNode(root, std::forward<T>(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void remove(U&& key) {
         removeNode(root, std::forward<T>(key));
       }

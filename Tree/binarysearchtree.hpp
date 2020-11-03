@@ -18,7 +18,7 @@ namespace sandbox {
         BinaryNode* right;
 
       public:
-        template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+        template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
         explicit BinaryNode(U&& Key = U()) : key(std::forward<U>(Key)) {
           right = left = nullptr;
         };
@@ -28,22 +28,22 @@ namespace sandbox {
 
     public:
       BinarySearchTree() : root(nullptr) {};
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       explicit BinarySearchTree(T&& key) {
         root = new BinaryNode(std::forward<T>(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void insert(U&& key) {
-        insertNode(root, std::forward<T>(key));
+        insertNode(root, std::move(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       const BinaryNode* find(U&& key) const {
         return findNode(root, std::forward<T>(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void remove(U&& key) {
         removeNode(root, std::forward<T>(key));
       }

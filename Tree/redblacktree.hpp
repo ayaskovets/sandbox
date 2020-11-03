@@ -54,7 +54,7 @@ namespace sandbox {
         }
 
       public:
-        template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+        template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
         explicit RBNode(U&& Key = U(), RBColor Color = RBColor::Red) :
           key(std::forward<U>(Key)), parent(nullptr), right(nullptr), left(nullptr), color(Color) {
         }
@@ -65,12 +65,12 @@ namespace sandbox {
     public:
       RedBlackTree() : root(nullptr) {}
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       explicit RedBlackTree(U&& key) {
         root = new RBNode(std::forward<U>(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void insert(U&& key) {
         repairInsertion(insertNode(root, std::forward<T>(key)));
 
@@ -79,12 +79,12 @@ namespace sandbox {
         }
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       const RBNode* find(U&& key) const {
         return findNode(root, std::forward<T>(key));
       }
 
-      template <typename U, class = typename std::enable_if<std::is_same<typename std::decay<U>::type, T>::value>::type>
+      template <typename U, class = std::enable_if_t<std::is_same<std::decay_t<U>, T>::value>>
       void remove(U&& key) {
         repairRemoval(removeNode(root, std::forward<T>(key)));
 
