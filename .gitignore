@@ -33,5 +33,6 @@
 *.app
 
 # Other
+*.DS_Store
 sandbox.cpp
 >>>>>>> Modified .gitignore
