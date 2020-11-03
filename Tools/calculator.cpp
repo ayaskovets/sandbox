@@ -6,6 +6,7 @@
 #include <functional>
 #include <optional>
 #include <tuple>
+#include <cmath>
 
 namespace sandbox {
 
