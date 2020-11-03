@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "calculator.hpp"
 
 #include <algorithm>
 #include <stack>
@@ -28,7 +28,9 @@ namespace sandbox {
         return sandbox::tools::popReturn(args) + sandbox::tools::popReturn(args);
       }
       double sub(std::stack<double>& args) {
-        return -(sandbox::tools::popReturn(args) - sandbox::tools::popReturn(args));
+        double subtrahend = sandbox::tools::popReturn(args);
+        double minuend = sandbox::tools::popReturn(args);
+        return minuend - subtrahend;
       }
       double mul(std::stack<double>& args) {
         return sandbox::tools::popReturn(args) * sandbox::tools::popReturn(args);

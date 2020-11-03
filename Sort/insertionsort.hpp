@@ -1,5 +1,6 @@
-#ifndef INSERTIONSORT_H
-#define INSERTIONSORT_H
+#pragma once
+#ifndef INSERTIONSORT_HPP
+#define INSERTIONSORT_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -55,4 +56,4 @@ namespace sandbox {
 
 }
 
-#endif // INSERTIONSORT_H
+#endif // INSERTIONSORT_HPP

@@ -1,5 +1,6 @@
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#pragma once
+#ifndef CALCULATOR_HPP
+#define CALCULATOR_HPP
 
 #include <string>
 #include <variant>
@@ -50,4 +51,4 @@ namespace sandbox {
 
 }
 
-#endif // CALCULATOR_H
+#endif // CALCULATOR_HPP
