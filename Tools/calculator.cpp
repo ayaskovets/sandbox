@@ -5,13 +5,14 @@
 #include <unordered_map>
 #include <functional>
 #include <optional>
+#include <tuple>
 
 namespace sandbox {
 
   namespace tools {
 
     template<typename T>
-    auto popReturn(std::stack<T>& stack) {
+    T popReturn(std::stack<T>& stack) {
       T result = stack.top();
       stack.pop();
       return result;
@@ -47,11 +48,11 @@ namespace sandbox {
       }
       // operators with corresponding proprity (bigger numbers are prioritized) and associativity : true = left, false = right
       static const std::unordered_map< std::string_view, std::tuple< size_t, bool, std::function<double(std::stack<double>&)> > > supported_operators = {
-          std::make_pair("^", std::tuple(3, false, std::bind(std::ref(pow), std::placeholders::_1))),
-          std::make_pair("*", std::tuple(2, true, std::bind(std::ref(mul), std::placeholders::_1))),
-          std::make_pair("/", std::tuple(2, true, std::bind(std::ref(div), std::placeholders::_1))),
-          std::make_pair("+", std::tuple(1, true, std::bind(std::ref(add), std::placeholders::_1))),
-          std::make_pair("-", std::tuple(1, true, std::bind(std::ref(sub), std::placeholders::_1))),
+          std::make_pair("^", std::make_tuple(3, false, std::bind(std::ref(pow), std::placeholders::_1))),
+          std::make_pair("*", std::make_tuple(2, true, std::bind(std::ref(mul), std::placeholders::_1))),
+          std::make_pair("/", std::make_tuple(2, true, std::bind(std::ref(div), std::placeholders::_1))),
+          std::make_pair("+", std::make_tuple(1, true, std::bind(std::ref(add), std::placeholders::_1))),
+          std::make_pair("-", std::make_tuple(1, true, std::bind(std::ref(sub), std::placeholders::_1)))
       };
 
       // functions

@@ -34,5 +34,10 @@
 
 # Other
 *.DS_Store
-sandbox.cpp
+testing
+build
+.vscode
+*.code-workspace
+*.txt
+*.gitignore
 >>>>>>> Modified .gitignore

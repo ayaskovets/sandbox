@@ -23,7 +23,7 @@ namespace sandbox {
     void shellsort(ContainerIter first, ContainerIter last, Compare comp) {
       const auto container_size = std::distance(first, last);
 
-      std::vector<std::iterator_traits<ContainerIter>::difference_type> gaps;
+      std::vector<typename std::iterator_traits<ContainerIter>::difference_type> gaps;
       gaps.reserve(container_size / 2);
 
       // Ciura's gap sequence
@@ -35,7 +35,7 @@ namespace sandbox {
         } while (gaps.back() > container_size);
       }
       else {
-        typename std::iterator_traits<ContainerIter>::difference_type next_ciura_val = std::floor(static_cast<double>(gaps.back()) * 2.25);
+        typename std::iterator_traits<ContainerIter>::difference_type next_ciura_val = static_cast<size_t>(gaps.back() * 2.25);
         while (next_ciura_val < container_size) {
           gaps.push_back(next_ciura_val);
           next_ciura_val *= 2.25;
