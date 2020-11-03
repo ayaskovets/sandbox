@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CALCULATOR_HPP
-#define CALCULATOR_HPP
 
 #include <string>
 #include <variant>
@@ -23,9 +21,9 @@ namespace sandbox {
         };
 
       private:
-        std::vector<Token> _tokens;
-        std::vector<Token>::const_iterator _pos;
-        std::string _expression;
+        std::vector<Token> tokens;
+        std::vector<Token>::const_iterator pos;
+        std::string expression;
 
       public:
         Tokenizer();
@@ -50,5 +48,3 @@ namespace sandbox {
   }
 
 }
-
-#endif // CALCULATOR_HPP

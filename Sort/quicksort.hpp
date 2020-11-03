@@ -1,6 +1,4 @@
 #pragma once
-#ifndef QUICKSORT_HPP
-#define QUICKSORT_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -36,5 +34,3 @@ namespace sandbox {
   }
 
 }
-
-#endif // QUICKSORT_HPP

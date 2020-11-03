@@ -1,6 +1,4 @@
 #pragma once
-#ifndef INSERTIONSORT_HPP
-#define INSERTIONSORT_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -55,5 +53,3 @@ namespace sandbox {
   }
 
 }
-
-#endif // INSERTIONSORT_HPP

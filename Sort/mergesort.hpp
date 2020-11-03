@@ -1,6 +1,4 @@
 #pragma once
-#ifndef MERGESORT_HPP
-#define MERGESORT_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -27,5 +25,3 @@ namespace sandbox {
   }
 
 }
-
-#endif // MERGESORT_HPP

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef HEAPSORT_HPP
-#define HEAPSORT_HPP
 
 #include <algorithm>
 #include <iterator>
@@ -53,5 +51,3 @@ namespace sandbox {
   }
 
 }
-
-#endif // HEAPSORT_HPP

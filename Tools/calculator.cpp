@@ -171,14 +171,14 @@ namespace sandbox {
     }
 
     void Calculator::Tokenizer::setExpression(std::string_view expression) {
-      _tokens.clear();
-      tokenize(_expression = std::move(prepare_expression(std::string(expression))));
-      _pos = _tokens.cbegin();
+      tokens.clear();
+      tokenize(expression = std::move(prepare_expression(std::string(expression))));
+      pos = tokens.cbegin();
     }
 
     const Calculator::Tokenizer::Token* Calculator::Tokenizer::next() {
-      if (_pos != _tokens.cend()) {
-        return &*_pos++;
+      if (pos != tokens.cend()) {
+        return &*pos++;
       }
       else {
         return nullptr;
@@ -189,26 +189,26 @@ namespace sandbox {
       for (auto expr_it = expression.cbegin(); expr_it < expression.cend(); std::advance(expr_it, 1)) {
         const auto function = read_function(expr_it, expression.cend());
         if (function.has_value()) {
-          _tokens.emplace_back(Token(function.value()));
+          tokens.emplace_back(Token(function.value()));
           std::advance(expr_it, -1);
           continue;
         }
 
         const auto number = read_number(expr_it, expression.cend());
         if (number.has_value()) {
-          _tokens.emplace_back(Token(number.value()));
+          tokens.emplace_back(Token(number.value()));
           std::advance(expr_it, -1);
           continue;
         }
 
         const auto oper = read_operator(expr_it, expression.cend());
         if (oper.has_value()) {
-          _tokens.emplace_back(Token(oper.value()));
+          tokens.emplace_back(Token(oper.value()));
           std::advance(expr_it, -1);
           continue;
         }
 
-        _tokens.emplace_back(Token(std::string_view(&*expr_it, 1)));
+        tokens.emplace_back(Token(std::string_view(&*expr_it, 1)));
       }
     };
 
