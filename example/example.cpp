@@ -1,51 +1,31 @@
 #include "camera.hpp"
-#include "geometry.hpp"
 #include "scene.hpp"
 #include "window.hpp"
 
-#include <chrono>
-#include <iostream>
-
-/*
-Albedo Hint:
-0: Diffuse color
-1: Specular lighting
-2: Reflection
-3: Refraction
-*/
+using FloatingType = float;
+using Vec3 = Vector<3, FloatingType>;
+using Pixel = Vector<3, unsigned char>;
+using Color = Pixel;
 
 int main() {
-  Window window(1366, 768);
+  Window window(1024, 768);
 
-  Material mirror(Vec3f(255, 255, 255) / 255, Vec4f(0, 10, 0.8, 0), 1425, 1);
-  Material glass(Vec3f(153, 178, 204) / 255, Vec4f(0, 0.5, 0.1, 0.8), 125, 1.5);
-  Material ivory(Vec3f(102, 102, 77) / 255, Vec4f(0.6, 0.3, 0.1, 0), 35, 1);
-  Material red(Vec3f(77, 26, 26) / 255, Vec4f(0.9, 0.1, 0, 0), 10, 1);
-  Material blue(Vec3f(50, 50, 75) / 255, Vec4f(0.7, 0.2, 0.1, 0.5), 100, 1.3);
+  SurfaceMaterial wood(Color(139, 90, 43));
+  SurfaceMaterial metal(Color(123, 144, 149));
 
-  Camera camera(90, Vec3f(0, 0, 0));
-  Scene scene(
-    {
-      new Sphere(Vec3f(4, 3, -16), 2, mirror), 
-      new Sphere(Vec3f(1, -1.5, -10), 1.5, glass),
-      new Sphere(Vec3f(-1.5, -0.5, -18), 3, ivory), 
-      new Sphere(Vec3f(-7, 3, -18), 4, red),
-      new Plane(Vec3f(0, -10, 0), Vec3f(0, 1, 0), blue)
-    },
-    {
-      new Light(Vec3f(20, 20, 20), 1.5), 
-      new Light(Vec3f(-30, 50, -25), 1.8), 
-      new Light(Vec3f(-30, 20, 30), 1.7)
-    });
+  Camera<FloatingType, Pixel> camera(90, Vec3(0, 0, 0));
+  Scene<FloatingType> scene(
+      {
+          new Sphere<FloatingType>(Vec3(-5, 2, -18), 1.5, wood),
+          new Sphere<FloatingType>(Vec3(-3, -2, -10), 2, metal),
+          new Sphere<FloatingType>(Vec3(4, 4, -20), 4, wood),
+      },
+      {
+          new Light<FloatingType>(Vec3(-20, 20, 20), 1.8),
+      });
 
-  std::chrono::time_point<std::chrono::system_clock> beg_time = std::chrono::system_clock::now();
-
-  Frame frame = camera.getFrame(window.getWidth(), window.getHeight(), scene);
+  std::vector<Pixel> frame = camera.getFrame(window, scene);
   window.renderPPM("out.ppm", frame);
-
-  std::chrono::time_point<std::chrono::system_clock> end_time = std::chrono::system_clock::now();
-
-  std::cout << "Time: " << std::chrono::duration<double>(end_time - beg_time).count() * 1000 << " ms\n";
 
   return 0;
 }
