@@ -1,3 +1,10 @@
+.gitignore
+CMakeLists.txt
+*.code-workspace
+build
+.vscode
+*.DS_Store
+
 # Prerequisites
 *.d
 
