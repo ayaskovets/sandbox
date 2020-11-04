@@ -1,86 +1,117 @@
 #pragma once
 
-#include <geometry.hpp>
+#include <algorithm>
+
+#include "geometry.hpp"
 
 // Material
 
-class SurfaceMaterial {
-  using Color = Vector<3, unsigned char>;
+struct Material {
+  Vec3f diffuse_color;
+  Vec4f albedo;
 
-  Color color;
+  float specular_exp;
+  float refraction_idx;
 
- public:
-  SurfaceMaterial(Color col) : color(col[0], col[1], col[2]) {}
-
-  Color getColor() const noexcept { return color; }
+  Material(const Vec3f& Color, const Vec4f& Albedo, float SpecularExp, float RefractionIdx)
+      : diffuse_color(Color), albedo(Albedo), specular_exp(SpecularExp), refraction_idx(RefractionIdx) {}
 };
 
 // Light
 
-template <typename FloatingType>
-class Light {
-  using Vec3 = Vector<3, FloatingType>;
+struct Light {
+  Vec3f pos;
+  float intensity;
 
-  Vec3 pos;
-  FloatingType intensity;
-
- public:
-  FloatingType getIntensity() const noexcept { return intensity; }
-  Vec3 getPos() const noexcept { return pos; }
-
-  Light(Vec3 Pos, FloatingType Intensity) : pos(Pos[0], Pos[1], Pos[2]), intensity(Intensity) {}
+  Light(const Vec3f& Pos, float Intensity) : pos(Pos), intensity(Intensity) {}
 };
 
-// SceneObject
+// Object
 
-template <typename FloatingType>
-class SceneObject {
-  using Vec3 = Vector<3, FloatingType>;
-  using Color = Vector<3, unsigned char>;
+struct Object {
+  Material material;
 
- protected:
-  SurfaceMaterial material;
+  Object(const Material& Material) : material(Material) {}
 
- public:
-  SceneObject(SurfaceMaterial Material) : material(Material) {}
-
-  Color getColor() const noexcept { return material.getColor(); }
-
-  virtual bool intersects(const Vec3& origin, const Vec3& direction, FloatingType* distance, Vec3* norm) const = 0;
-  virtual ~SceneObject() {}
+  virtual bool intersects(const Vec3f& origin, const Vec3f& direction, float* distance, Vec3f* point, Vec3f* norm) const = 0;
+  virtual ~Object() {}
 };
 
 // Sphere
 
-template <typename FloatingType>
-class Sphere : public SceneObject<FloatingType> {
-  using Vec3 = Vector<3, FloatingType>;
+struct Sphere : public Object {
+  Vec3f center;
+  float radius;
 
-  Vec3 center;
-  FloatingType radius;
+  Sphere(const Vec3f& Center, float Radius, const Material& Mater) : Object(Mater), center(Center), radius(Radius) {}
 
- public:
-  Sphere(Vec3 Center, FloatingType Radius, SurfaceMaterial Material)
-      : SceneObject<FloatingType>(Material), center(Center[0], Center[1], Center[2]), radius(Radius) {}
+  bool intersects(const Vec3f& origin, const Vec3f& direction_v, float* distance, Vec3f* point, Vec3f* norm) const override {
+    const Vec3f radius_v = center - origin;
 
-  // equation a * t^2 + b * t + c = 0
-  bool intersects(const Vec3& origin, const Vec3& direction, FloatingType* distance, Vec3* norm) const override {
-    const Vec3 radius_v = origin - center;
+    const float ot_dist = dotProduct(radius_v, direction_v);
+    const float ct_dist2 = dotProduct(radius_v, radius_v) - ot_dist * ot_dist;
 
-    const FloatingType normal_v_len = (radius_v - (direction * radius_v.dotProduct(direction))).length();
-    if (normal_v_len > radius) {
+    if (ct_dist2 > radius * radius) {
       return false;
-    } else {
-      if (distance) {
-        *distance = ::sqrt(radius_v.length() + normal_v_len) - ::sqrt(radius * radius - normal_v_len);
-
-        if (norm) {
-          Vec3 point = origin + (direction * *distance);
-          *norm = (point - center).normalize();
-        }
-      }
-
-      return true;
     }
+
+    const float pt_dist = TracerMath::sqrt(radius * radius - ct_dist2);
+    const float op_dist = std::min(ot_dist - pt_dist, ot_dist + pt_dist);
+
+    if (op_dist < 0) {
+      return false;
+    }
+
+    if (distance) {
+      *distance = op_dist;
+    }
+    if (point) {
+      *point = origin + direction_v * op_dist;
+    }
+    if (norm) {
+      *norm = ((origin + direction_v * op_dist) - center).normalize();
+    }
+
+    return true;
   }
 };
+
+struct Plane : public Object {
+  Vec3f plane_point;
+  Vec3f norm_v;
+
+  Plane(const Vec3f& Point, const Vec3f& Norm, const Material& Mater) : Object(Mater), plane_point(Point), norm_v(Norm) {
+    norm_v.normalize();
+  }
+  Plane(const Vec3f& Point1, const Vec3f& Point2, const Vec3f& Point3, const Material& Material)
+      : Object(Material), plane_point(Point1) {
+    norm_v = crossProduct((Point2 - Point1), (Point3 - Point1)).normalize();
+  }
+
+  bool intersects(const Vec3f& origin, const Vec3f& direction_v, float* distance, Vec3f* point, Vec3f* norm) const override {
+    const float denom = dotProduct(direction_v, norm_v);
+    if (TracerMath::abs(denom) < 1e-5F) {
+      return false;
+    }
+
+    const float param = dotProduct(plane_point - origin, norm_v) / denom;
+    if (param < 0) {
+      return false;
+    }
+
+    if (distance) {
+      *distance = ((direction_v - origin) * param).length();
+    }
+    if (point) {
+      *point = origin + direction_v * param;
+    }
+    if (norm) {
+      *norm = denom < 0 ? norm_v : -norm_v;
+    }
+
+    return true;
+  }
+};
+
+using ObjectPtr = Object*;
+using LightPtr = Light*;
