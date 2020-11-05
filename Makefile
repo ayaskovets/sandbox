@@ -2,29 +2,27 @@ PROJECT  := bird
 
 CXX      := clang++
 CXXFLAGS := -Wall -std=c++17
-LDFLAGS  := -L/usr/local/Cellar/glfw/3.3/lib -lglfw -L/usr/local/Cellar/glew/2.1.0_1/lib -lglew -L/System/Library/Frameworks/OpenGL.framework/Libraries -lGL
-INCLUDE  :=
+LDFLAGS  := -L/usr/local/Cellar/glfw/3.3/lib -lglfw -L/usr/local/Cellar/glew/2.1.0_1/lib -lGLEW -L/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries -lGL
+INCLUDE  := -I./src
 
 TMP_DIR  := ./temp
 SRC_DIR  := ./src
 BIN_DIR  := $(TMP_DIR)/bin
 OBJ_DIR  := $(TMP_DIR)/obj
 
-SRC      :=     \
-	camera.cpp  \
-	GLutil.cpp  \
-	main.cpp    \
-	mesh.cpp    \
-	model.cpp   \
-	shader.cpp  \
-	texture.cpp \
-	vao.cpp     \
-	window.cpp  ;
+SRC      :=               \
+	gl_util/camera.cpp    \
+	gl_util/globject.cpp  \
+	gl_util/mesh.cpp      \
+	gl_util/model.cpp     \
+	gl_util/shader.cpp    \
+	gl_util/vao.cpp       \
+	gl_util/texture.cpp   \
+	gl_util/window.cpp    \
+	game.cpp              \
+	main.cpp              ;
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
-
-test:
-	@echo $(OBJECTS)
 
 debug: CXXFLAGS   += -g
 debug: build $(BIN_DIR)/$(PROJECT)
