@@ -18,6 +18,7 @@ GLobject& GLobject::operator=(GLobject&& object)
 {
     id = object.id;
     object.id = 0;
+    return *this;
 }
 
 GLuint GLobject::getID() const
