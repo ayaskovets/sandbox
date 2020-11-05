@@ -45,14 +45,11 @@ Texture::Texture(const char* path)
 }
 
 Texture::Texture(Texture&& texture)
-: GLobject(std::forward<GLobject>(texture))
-{}
-
-Texture& Texture::operator=(Texture&& texture)
+: GLobject(texture.id)
 {
-    id = texture.id;
     texture.id = 0;
-    return *this;
+    texture.width = 0;
+    texture.height = 0;
 }
 
 GLint Texture::getWidth() const

@@ -13,7 +13,7 @@ protected:
     GLobject();
     explicit GLobject(GLuint ID);
     GLobject(GLobject&& object);
-    GLobject& operator=(GLobject&& object);
+    GLobject& operator=(GLobject&& object) = delete;
 
 public:
     GLuint getID() const;

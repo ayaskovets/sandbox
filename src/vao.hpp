@@ -7,6 +7,7 @@ class VertexArray : public GLobject
 public:
     VertexArray();
     VertexArray(VertexArray&& vao);
+    VertexArray& operator=(VertexArray&& vao) = delete;
     ~VertexArray();
 
     void enableAttribute(GLuint index) const;

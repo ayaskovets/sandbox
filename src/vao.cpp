@@ -10,8 +10,15 @@ VertexArray::VertexArray()
 }
 
 VertexArray::VertexArray(VertexArray&& vao)
-: GLobject(std::forward<VertexArray>(vao))
-{}
+: GLobject(vao.id)
+{
+    vao.id = 0;
+}
+
+VertexArray::~VertexArray()
+{
+    glDeleteVertexArrays(1, &id);
+}
 
 void VertexArray::enableAttribute(GLuint index) const
 {
@@ -39,9 +46,4 @@ void VertexArray::setAttribute(GLuint index, GLint size, GLenum type,
     glBindVertexArray(id);
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
     glEnableVertexAttribArray(index);
-}
-
-VertexArray::~VertexArray()
-{
-    glDeleteVertexArrays(1, &id);
 }
