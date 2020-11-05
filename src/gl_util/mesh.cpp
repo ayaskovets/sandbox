@@ -1,5 +1,8 @@
 #include "mesh.hpp"
 
+namespace gl_util
+{
+
 Mesh::Mesh()
 : vao()
 , vbo()
@@ -20,4 +23,6 @@ void Mesh::draw() const
 {
     vao.bind();
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ibo.getSize() / sizeof(GLushort)), GL_UNSIGNED_SHORT, nullptr);
+}
+
 }

@@ -3,10 +3,13 @@
 #include <memory>
 #include <vector>
 
-#include "glm/glm.hpp"
+#include "glm/mat4x4.hpp"
 
 #include "mesh.hpp"
 #include "texture.hpp"
+
+namespace gl_util
+{
 
 struct Asset
 {
@@ -25,3 +28,5 @@ struct Model
 
     void draw() const;
 };
+
+}
