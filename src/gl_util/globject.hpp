@@ -13,7 +13,7 @@ class GLobject : public util::NonCopyable
 protected:
     GLuint id;
 
-    GLobject() noexcept;
+    constexpr GLobject() noexcept;
     explicit GLobject(GLuint id) noexcept;
     GLobject(GLobject&& object) noexcept;
     GLobject& operator=(GLobject&& object) = delete;

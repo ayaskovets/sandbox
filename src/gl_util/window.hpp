@@ -27,8 +27,10 @@ public:
     void update() const;
     void close() const;
 
-    template <typename T>
-    void setCallback(T callback) const;
+    void setCallback(GLFWframebuffersizefun) const;
+    void setCallback(GLFWkeyfun) const;
+    void setCallback(GLFWmousebuttonfun) const;
+    void setCallback(GLFWcursorposfun) const;
 };
 
 }

@@ -12,6 +12,19 @@ Window::Window(const GLchar* title, GLuint width, GLuint height, GLFWmonitor* mo
     {
         util::log::cerr("Failed to create window:", title);
     }
+    else
+    {
+        auto resize = [](GLFWwindow*, int width, int height) -> void
+        {
+            glViewport(0, 0, width, height);
+        };
+
+        int fbwidth = 0, fbheight = 0;
+        glfwGetFramebufferSize(handle, &fbwidth, &fbheight);
+        resize(handle, fbwidth, fbheight);
+
+        glfwSetFramebufferSizeCallback(handle, resize);
+    }
 
     glfwMakeContextCurrent(handle);
 }
@@ -57,22 +70,18 @@ void Window::close() const
     glfwSetWindowShouldClose(handle, GL_TRUE);
 }
 
-template <>
 void Window::setCallback(GLFWframebuffersizefun callback) const
 {
     glfwSetFramebufferSizeCallback(handle, callback);
 }
-template <>
 void Window::setCallback(GLFWkeyfun callback) const
 {
     glfwSetKeyCallback(handle, callback);
 }
-template <>
 void Window::setCallback(GLFWmousebuttonfun callback) const
 {
     glfwSetMouseButtonCallback(handle, callback);
 }
-template <>
 void Window::setCallback(GLFWcursorposfun callback) const
 {
     glfwSetCursorPosCallback(handle, callback);
