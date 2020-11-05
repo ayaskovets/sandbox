@@ -1,8 +1,11 @@
 #pragma once
 
-#include "GLutil.hpp"
+#include "gl_util/globject.hpp"
 
-class Texture : public GLobject
+namespace gl_util
+{
+
+class Texture : public gl_util::GLobject
 {
     GLint width;
     GLint height;
@@ -19,3 +22,5 @@ public:
     void bind() const;
     void unbind() const;
 };
+
+}

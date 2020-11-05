@@ -1,11 +1,14 @@
 #include "texture.hpp"
 
-#include <iostream>
-
 #define GLEW_STATIC
 #include "GL/glew.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
+
+#include "util/log.hpp"
+
+namespace gl_util
+{
 
 Texture::Texture()
 : GLobject()
@@ -40,7 +43,7 @@ Texture::Texture(const char* path)
     }
     else
     {
-        std::cerr << "Texture loading failed: '" << path << "'" << std::endl;
+        util::log::cerr("Texture loading failed:", path);
     }
 }
 
@@ -70,4 +73,6 @@ void Texture::bind() const
 void Texture::unbind() const
 {
     glBindTexture(GL_TEXTURE_2D, id);
+}
+
 }
