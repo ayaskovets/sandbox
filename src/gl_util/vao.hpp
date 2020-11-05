@@ -1,14 +1,14 @@
 #pragma once
 
-#include "GLutil.hpp"
+#include "globject.hpp"
 
-class VertexArray : public GLobject
+class VAO : public gl_util::GLobject
 {
 public:
-    VertexArray();
-    VertexArray(VertexArray&& vao);
-    VertexArray& operator=(VertexArray&& vao) = delete;
-    ~VertexArray();
+    VAO();
+    VAO(VAO&& vao);
+    VAO& operator=(VAO&& vao) = delete;
+    ~VAO();
 
     void enableAttribute(GLuint index) const;
     void disableAttribute(GLuint index) const;

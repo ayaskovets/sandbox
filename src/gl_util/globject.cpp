@@ -3,10 +3,6 @@
 namespace gl_util
 {
 
-constexpr GLobject::GLobject() noexcept
-: id(0)
-{}
-
 GLobject::GLobject(GLuint id) noexcept
 : id(id)
 {}

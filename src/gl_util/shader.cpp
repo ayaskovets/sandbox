@@ -1,7 +1,6 @@
 #include "shader.hpp"
 
 #include <fstream>
-#include <glm/glm.hpp>
 #include <string>
 #include <vector>
 
@@ -150,53 +149,38 @@ void ShaderProgram::disable() const
     glUseProgram(0);
 }
 
-template<typename T>
-void ShaderProgram::setUniform(const GLchar* name, const T& value) const
-{
-    setUniform(glGetUniformLocation(id, name), value);
-}
-
-template <>
 void ShaderProgram::setUniform(GLint location, const GLboolean& value) const
 {
     glUniform1i(location, static_cast<GLint>(value));
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const GLint& value) const
 {
     glUniform1i(location, value);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const GLfloat& value) const
 {
     glUniform1f(location, value);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::vec2& value) const
 {
     glUniform2fv(location, 1, &value[0]);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::vec3& value) const
 {
     glUniform3fv(location, 1, &value[0]);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::vec4& value) const
 {
     glUniform4fv(location, 1, &value[0]);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::mat2& value) const
 {
     glUniformMatrix2fv(location, 1, GL_FALSE, &value[0][0]);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::mat3& value) const
 {
     glUniformMatrix3fv(location, 1, GL_FALSE, &value[0][0]);
 }
-template <>
 void ShaderProgram::setUniform(GLint location, const glm::mat4& value) const
 {
     glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);

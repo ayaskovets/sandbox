@@ -2,6 +2,7 @@
 
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <utility>
 
 #include "globject.hpp"
@@ -41,9 +42,21 @@ public:
     void disable() const;
 
     template <typename T>
-    void setUniform(const GLchar* name, const T& value) const;
-    template <typename T>
-    void setUniform(GLint location, const T& value) const;
+    void setUniform(const GLchar* name, const T& value) const
+    {
+        setUniform(glGetUniformLocation(id, name), value);
+    }
+
+    void setUniform(GLint location, const GLboolean& value) const;
+    void setUniform(GLint location, const GLint& value) const;
+    void setUniform(GLint location, const GLfloat& value) const;
+    void setUniform(GLint location, const glm::vec2& value) const;
+    void setUniform(GLint location, const glm::vec3& value) const;
+    void setUniform(GLint location, const glm::vec4& value) const;
+    void setUniform(GLint location, const glm::mat2& value) const;
+    void setUniform(GLint location, const glm::mat3& value) const;
+    void setUniform(GLint location, const glm::mat4& value) const;
+
 };
 
 }

@@ -1,46 +1,44 @@
 #include "vao.hpp"
 
-#include <utility>
-
-VertexArray::VertexArray()
+VAO::VAO()
 : GLobject()
 {
     glGenVertexArrays(1, &id);
     glBindVertexArray(id);
 }
 
-VertexArray::VertexArray(VertexArray&& vao)
+VAO::VAO(VAO&& vao)
 : GLobject(vao.id)
 {
     vao.id = 0;
 }
 
-VertexArray::~VertexArray()
+VAO::~VAO()
 {
     glDeleteVertexArrays(1, &id);
 }
 
-void VertexArray::enableAttribute(GLuint index) const
+void VAO::enableAttribute(GLuint index) const
 {
     glEnableVertexAttribArray(index);
 }
 
-void VertexArray::disableAttribute(GLuint index) const
+void VAO::disableAttribute(GLuint index) const
 {
     glDisableVertexAttribArray(index);
 }
 
-void VertexArray::bind() const
+void VAO::bind() const
 {
     glBindVertexArray(id);
 }
 
-void VertexArray::unbind() const
+void VAO::unbind() const
 {
     glBindVertexArray(0);
 }
 
-void VertexArray::setAttribute(GLuint index, GLint size, GLenum type,
+void VAO::setAttribute(GLuint index, GLint size, GLenum type,
     GLboolean normalized, GLsizei stride, const void* pointer) const
 {
     glBindVertexArray(id);
