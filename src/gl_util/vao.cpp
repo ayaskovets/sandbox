@@ -1,5 +1,8 @@
 #include "vao.hpp"
 
+namespace gl_util
+{
+
 VAO::VAO()
 : GLobject()
 {
@@ -44,4 +47,6 @@ void VAO::setAttribute(GLuint index, GLint size, GLenum type,
     glBindVertexArray(id);
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
     glEnableVertexAttribArray(index);
+}
+
 }

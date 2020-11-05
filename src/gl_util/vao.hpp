@@ -2,6 +2,9 @@
 
 #include "globject.hpp"
 
+namespace gl_util
+{
+
 class VAO : public gl_util::GLobject
 {
 public:
@@ -19,3 +22,5 @@ public:
     void setAttribute(GLuint index, GLint size, GLenum type,
         GLboolean normalized, GLsizei stride, const void* pointer) const;
 };
+
+}
