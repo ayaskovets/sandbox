@@ -2,6 +2,9 @@
 
 #include "glm/gtc/quaternion.hpp"
 
+namespace gl_util
+{
+
 Camera::Camera(glm::vec3 pos, glm::vec3 front, glm::vec3 right, glm::vec3 up)
 : pos(pos)
 , front(front)
@@ -51,5 +54,7 @@ void Camera::rotate(CameraRotationDirection dir, GLfloat angle)
 
 glm::mat4 Camera::getView() const
 {
-  return glm::lookAt(pos, pos + front, up);
+    return glm::lookAt(pos, pos + front, up);
+}
+
 }

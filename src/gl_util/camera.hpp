@@ -2,8 +2,12 @@
 
 #define GLEW_STATIC
 #include "GL/glew.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+
+#include "glm/vec3.hpp"
+#include "glm/mat4x4.hpp"
+
+namespace gl_util
+{
 
 enum class CameraMoveDirection
 {
@@ -40,3 +44,5 @@ public:
 
     glm::mat4 getView() const;
 };
+
+}
