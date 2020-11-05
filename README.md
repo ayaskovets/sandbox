@@ -1,2 +1,2 @@
-# flappy_bird
+# Flappy Bird
 C++ OpenGL flappy bird clone
