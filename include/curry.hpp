@@ -1,6 +1,4 @@
-#include <cassert>
-
-#include <utility>
+#pragma once
 
 namespace
 {
