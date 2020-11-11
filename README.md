@@ -1,2 +1,3 @@
-# cpp_fun
+# CPP (Fun)ctional
+
 Functional programming exercises in C++
