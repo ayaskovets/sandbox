@@ -23,6 +23,7 @@ auto ltest = [m = 1](int a, float b, char c) mutable
 class CTest
 {
   int m;
+
 public:
   constexpr CTest(int m): m{m}
   {}
@@ -82,30 +83,30 @@ int main()
       }
     }
     { // mutable
-        auto c = fun::curry(&CTest::test);
-        {
-          auto ctest = CTest{1};
-          auto res = c(ctest)(3)(3.f)('\3');
-          assert(res == ctest.test(3, 3.f, '\3'));
-        }
-        {
-          auto ctest = CTest{2};
-          auto res = c(ctest)(3)(3.f)('\3');
-          assert(res == ctest.test(3, 3.f, '\3'));
-        }
+      auto c = fun::curry(&CTest::test);
+      {
+        auto ctest = CTest{1};
+        auto res = c(ctest)(3)(3.f)('\3');
+        assert(res == ctest.test(3, 3.f, '\3'));
+      }
+      {
+        auto ctest = CTest{2};
+        auto res = c(ctest)(3)(3.f)('\3');
+        assert(res == ctest.test(3, 3.f, '\3'));
+      }
     }
     { // pointer
-        auto c = fun::curry(&CTest::test);
-        {
-          auto ctest = CTest{1};
-          auto res = c(&ctest)(3)(3.f)('\3');
-          assert(res != ctest.test(3, 3.f, '\3'));
-        }
-        {
-          auto ctest = CTest{2};
-          auto res = c(&ctest)(3)(3.f)('\3');
-          assert(res != ctest.test(3, 3.f, '\3'));
-        }
+      auto c = fun::curry(&CTest::test);
+      {
+        auto ctest = CTest{1};
+        auto res = c(&ctest)(3)(3.f)('\3');
+        assert(res != ctest.test(3, 3.f, '\3'));
+      }
+      {
+        auto ctest = CTest{2};
+        auto res = c(&ctest)(3)(3.f)('\3');
+        assert(res != ctest.test(3, 3.f, '\3'));
+      }
     }
   }
 }

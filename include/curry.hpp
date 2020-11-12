@@ -9,7 +9,7 @@ struct lambda_overload : Ls...
 };
 template<class... Ls>
 lambda_overload(Ls...) -> lambda_overload<Ls...>;
-}
+} // namespace
 
 namespace fun
 {
@@ -24,7 +24,7 @@ constexpr auto curry(Ret(C::*f)(Arg, Args...))
         return curry([f, c, arg](Args... args) mutable{ return (c.*f)(arg, args...); });
     };
   };
-  const auto pointer = [f](C* c) {
+  const auto pointer = [f](C* c){
     return [f, c](Arg arg) mutable{
       if constexpr (sizeof...(Args) == 0)
         return (c->*f)(arg);
