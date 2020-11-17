@@ -7,7 +7,7 @@
 namespace fun
 {
 template<typename T>
-using Maybe = std::optional<T>;
+using Maybe = const std::optional<T>;
 
 template<typename T>
 constexpr auto Just(T val) -> Maybe<T>
