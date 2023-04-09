@@ -2,7 +2,7 @@ PROJECT  := bird
 
 CXX      := clang++
 CXXFLAGS := -Wall -std=c++17
-LDFLAGS  := -L/usr/local/Cellar/glfw/3.3/lib -lglfw -L/usr/local/Cellar/glew/2.1.0_1/lib -lGLEW -L/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries -lGL
+LDFLAGS  := -L/usr/local/Cellar/glfw/3.3.6/lib -lglfw -L/usr/local/Cellar/glew/2.1.0_1/lib -lGLEW -L/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries -lGL
 INCLUDE  := -I./src
 
 TMP_DIR  := ./temp
