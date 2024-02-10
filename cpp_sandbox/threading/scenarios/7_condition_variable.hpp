@@ -18,8 +18,8 @@ SCENARIO(ConditionVariable, "7: condition variable") {
                 std::unique_lock lock(mutex);
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
                 stack.push_back(i);
-                cv.notify_one();
             }
+            cv.notify_one(); // ok after releasing the lock
         }
     });
 
