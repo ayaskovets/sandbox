@@ -53,9 +53,9 @@ int main(int argc, char *argv[]) {
     }
 
     if (!strncmp(protocol, TCP, sizeof(TCP) - 1)) {
-        return (is_server ? tcp_server : tcp_client)(hostname, port);
+        return !(is_server ? tcp_server : tcp_client)(hostname, port);
     } else if (!strncmp(protocol, UDP, sizeof(UDP) - 1)) {
-        // return (is_server ? udp_server : udp_client)(hostname, port);
+        return !(is_server ? udp_server : udp_client)(hostname, port);
     } else {
         usage();
     }
