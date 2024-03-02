@@ -19,4 +19,4 @@
     LOG("INFO", KGRN, fmt, __VA_ARGS__)
 
 #define CHAT(len, message)\
-    fprintf(stdout, KYEL "chat[%d]::" RESET "%s\n", len, message)
+    fprintf(stdout, KYEL "chat[%d]::" RESET "%*.*s\n", len, len, len, message)
