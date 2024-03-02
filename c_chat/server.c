@@ -127,7 +127,3 @@ bool tcp_server(const char *hostname, const char *port) {
 
     return true;
 }
-
-bool udp_server(const char *hostname, const char *port) {
-    return true;
-}

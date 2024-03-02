@@ -9,18 +9,15 @@
 #include "server.h"
 
 
-#define TCP "tcp"
-#define UDP "udp"
-
 void usage() {
-    fprintf(stderr, "usage: chat [-c] [-p protocol] [hostname] [port]\n");
+    fprintf(stderr, "usage: chat [-c] [hostname] [port]\n");
     exit(1);
 }
 
 int main(int argc, char *argv[]) {
     int opt;
     bool is_server = true;
-    const char *protocol = TCP, *hostname, *port;
+    const char *hostname, *port;
 
     if (argc < 3) {
         usage();
@@ -28,15 +25,6 @@ int main(int argc, char *argv[]) {
 
     while ((opt = getopt(argc, argv, "cp:")) != -1) {
         switch (opt) {
-        case 'p':
-            if (!strncmp(optarg, TCP, sizeof(TCP) - 1)) {
-                protocol = TCP;
-            } else if (!strncmp(optarg, UDP, sizeof(UDP) - 1)) {
-                protocol = UDP;
-            } else {
-                usage();
-            }
-            break;
         case 'c':
             is_server = false;
             break;
@@ -52,13 +40,5 @@ int main(int argc, char *argv[]) {
         port = argv[optind + 1];
     }
 
-    if (!strncmp(protocol, TCP, sizeof(TCP) - 1)) {
-        return !(is_server ? tcp_server : tcp_client)(hostname, port);
-    } else if (!strncmp(protocol, UDP, sizeof(UDP) - 1)) {
-        return !(is_server ? udp_server : udp_client)(hostname, port);
-    } else {
-        usage();
-    }
-
-    return 0;
+    return !(is_server ? tcp_server : tcp_client)(hostname, port);
 }

@@ -88,7 +88,3 @@ bool tcp_client(const char *hostname, const char *port) {
 
     return true;
 }
-
-bool udp_client(const char *hostname, const char *port) {
-    return true;
-}
