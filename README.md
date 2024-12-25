@@ -31,3 +31,6 @@ There is a lot of stuff with varying degree of complexity and usefulness here. T
 
 #### leetcode
 - Some solutions to random LeetCode problems. Too lazy to publish more
+
+#### rs_typesystems
+- Algorithm W typechecker implementation in Rust. Inspired by [the @tomprimozic repo](https://github.com/tomprimozic/type-systems) but unfortunately was never finished
