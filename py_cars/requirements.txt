@@ -1,0 +1,9 @@
+requests
+dacite
+pandas
+numpy
+matplotlib
+ipykernel
+seaborn
+pyzmq
+notebook

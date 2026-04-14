@@ -1,0 +1,13 @@
+# environment
+.venv
+.vscode
+
+# platform-specific
+.DS_Store
+
+# cache
+__pycache__
+
+# output files
+pages
+intermediate
